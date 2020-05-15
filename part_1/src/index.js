@@ -1,68 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = (props) => {
-  return(
-    <div>
-      <h1>{props.course}</h1>
-    </div>
-  )
-}
-
-const Part = (props) => {
-  return(
-    <div>
-      <p>
-        {props.part} {props.exercise}
-      </p>
-    </div>
-  )
-}
-
-const Content = (props) => {
-  return(
-    <div>
-      <Part part={props.part[0].name} exercise={props.part[0].exercises} />
-      <Part part={props.part[1].name} exercise={props.part[1].exercises} />
-      <Part part={props.part[2].name} exercise={props.part[2].exercises} />
-    </div>
-  )
-}
-
-const Total = (props) => {
-  return(
-    <div>
-      <p>Number of exercises {props.exercise[0].exercises + props.exercise[1].exercises + props.exercise[2].exercises}</p>
-    </div>
-  )
+const Button = (props) => {
+  return <button onClick={props.clickType}>{props.text}</button>
 }
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+  // save clicks of each button to own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content part={course.parts} />
-      <Total exercise={course.parts} />
+      <h1>give feedback</h1>
+      <Button clickType={() => setGood(good + 1) } text='good' />
+      <Button clickType={() => setNeutral(neutral + 1) } text='neutral' />
+      <Button clickType={() => setBad(bad + 1) } text='bad' />
+      <h1>statistics</h1>
+      <p>good {good}<br />neutral {neutral}<br />bad {bad}</p>
     </div>
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, 
+  document.getElementById('root')
+)
