@@ -1,0 +1,1 @@
+﻿This is the Anecdote application that displays computer science anecdotes and let's you vote for them.
