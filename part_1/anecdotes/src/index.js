@@ -9,27 +9,32 @@ const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, changeVotes] = useState(Array.apply(null, new Array(props.anecdotes.length)).map(Number.prototype.valueOf,0))
   
+  //Gets the index of the votes vector with maximum votes
+  let maximus = votes.indexOf(Math.max(...votes));
+
   const voteChange= () => {
     const copy = [...votes]
     copy[selected] += 1
     return(
-      () => changeVotes(copy)
+      () => changeVotes(copy)   
     )
   }
-
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       {props.anecdotes[selected]}
-      {console.log(selected)}
       <br />
       has {votes[selected]} votes
       <br />
       <Button handleClick={voteChange()} text='Vote' />
       <Button handleClick={() => setSelected(Math.floor(Math.random() * props.anecdotes.length))} text='Next Anecdote' />
+      <h1>Anecdote with most votes</h1>
+      {props.anecdotes[maximus]}
+      <br />
+      has {votes[maximus]} votes
     </div>
   )
 }
-
 
 const anecdotes = [
   'If it hurts, do it more often',
