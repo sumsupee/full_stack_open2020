@@ -5,25 +5,33 @@ const Button = (props) => {
   return <button onClick={props.clickType}>{props.text}</button>
 }
 
+const Statistic = (props) => {
+  return (
+  <tbody>
+    <tr>
+      <td>{props.text}</td> 
+      <td>{props.value}{props.sign}</td>
+    </tr>
+  </tbody>
+  )
+}
+
 const Statistics = ({good,neutral,bad,sumAll,averageAll,positivePercentage}) => { 
 if(good===0 & neutral===0 & bad ===0)
 {return <div>No feedback given</div>}
-else
-{
+
+else{
 return( 
-  <div>
-    <p>good {good}
-      <br />neutral {neutral}
-      <br />bad {bad}
-
-
-      {/* Unicafe Step 2 */}
-      <br />all {sumAll}
-      <br />average {averageAll}
-      <br />positive {positivePercentage}%
-    </p>
-  </div>)
-}
+  <table>
+    <Statistic text='good' value={good} />
+    <Statistic text='neutral' value={neutral} />
+    <Statistic text='bad' value={bad} />
+    <Statistic text='all' value={sumAll} />
+    <Statistic text='average' value={averageAll} />
+    <Statistic text='positive' value={positivePercentage} sign='%'/>
+  </table>
+    )
+  }
 }
 
 const App = () => {
