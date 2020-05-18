@@ -11,6 +11,11 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  //Unicafe Step 2
+  let sumAll = good + neutral + bad
+  let averageAll = (good*1 + neutral*0 + bad*-1)/sumAll
+  let positivePercentage = (good/sumAll)*100
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -18,7 +23,18 @@ const App = () => {
       <Button clickType={() => setNeutral(neutral + 1) } text='neutral' />
       <Button clickType={() => setBad(bad + 1) } text='bad' />
       <h1>statistics</h1>
-      <p>good {good}<br />neutral {neutral}<br />bad {bad}</p>
+      <p>good {good}
+      <br />neutral {neutral}
+      <br />bad {bad}
+
+
+      {/* Unicafe Step 2 */}
+      <br />all {sumAll}
+      <br />average {averageAll}
+      <br />positive {positivePercentage}%
+      
+      </p>
+
     </div>
   )
 }
