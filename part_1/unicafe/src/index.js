@@ -10,7 +10,7 @@ const Statistic = (props) => {
   <tbody>
     <tr>
       <td>{props.text}</td> 
-      <td>{props.value}{props.sign}</td> //sign for accomodating '%'' symbol
+      <td>{props.value}{props.sign}</td> 
     </tr>
   </tbody>
   )
