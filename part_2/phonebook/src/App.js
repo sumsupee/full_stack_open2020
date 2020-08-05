@@ -3,12 +3,15 @@ import contactService from './services/contacts'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 
 const App = () => {
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ searchTerm, setSearchTerm] = useState('')
+  const [ error, setError] =useState(null)
+  const [ errorType, setErrorType] = useState('greenNotification') 
   
   useEffect( () => {
     contactService
@@ -28,6 +31,21 @@ const App = () => {
             setPersons(persons.map(p => p.id !== person.id ? p : returnedContact))
             setNewName('')
             setNewNumber('')
+            setError(`Changed ${newName}'s number to ${newNumber}`)
+            setErrorType('greenNotification')
+            setTimeout(() => {
+              setError(null)
+              setErrorType(null)
+            }, 5000)
+          })
+          .catch(error => {
+            setError(`${newName} is already removed from server`)
+            setErrorType('redNotification')
+            setPersons(persons.filter(p => p.id!==person.id))
+            setTimeout(()=>{
+              setError(null)
+              setErrorType(null) 
+            }, 5000)
           })
       }
     }
@@ -41,8 +59,14 @@ const App = () => {
       .create(nameObject)
       .then(returnedContact => {
         setPersons(persons.concat(returnedContact))
+        setError(`Added ${newName}`)
+        setErrorType('greenNotification')
         setNewName('')
         setNewNumber('')
+        setTimeout(() => {
+          setError(null)
+          setErrorType(null)
+        }, 3000)
       })
     }
   }
@@ -72,6 +96,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={error} errorType={errorType}/>
       <Filter searchTerm ={searchTerm} handleSearchTermChange = {handleSearchTermChange} />
 
       <h2>Add a new</h2>
